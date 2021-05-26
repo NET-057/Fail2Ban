@@ -1,0 +1,13 @@
+# Fail2Ban configuration file
+
+[Definition]
+
+actionstop = sudo -u ec2-user aws --region us-west-2 ses send-email --destination ToAddresses=sender@gmail.com --from from@gmail.com --message "Subject={Data=\"[Fail2Ban] <name>: banned <ip> Date: `LC_TIME=C date -u +"%%a, %%d %%h %%Y %%T +0000"`\",Charset=UTF-8},Body={Text={Data=\"Hi,\nThe Fail2Ban jail <name> has just stop \",Charset=UTF-8}}"
+
+actioncheck = 
+
+actionban = sudo -u ec2-user aws --region us-west-2 ses send-email --destination ToAddresses=sender@gmail.com --from from@gmail.com --message "Subject={Data=\"[Fail2Ban] <name>: banned <ip> Date: `LC_TIME=C date -u +"%%a, %%d %%h %%Y %%T +0000"`\",Charset=UTF-8},Body={Text={Data=\"Hi,\nThe Fail2Ban jail <name> has just stop \",Charset=UTF-8}}"
+
+actionunban = 
+
+

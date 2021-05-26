@@ -1,0 +1,7 @@
+# fail2ban filter configuration for nginx
+
+[Definition]
+
+failregex = ^<HOST> -.*"POST \/api\/sessions HTTP\/\d+\.\d+" [\d]+ [\S]+ [\S]+ [\S]+ [\S]+ "[\S]+" "[\S]+" "\S+" ".*?" "-" ".*?" ".*?" "\S+" "-".*
+            ^<HOST> -.*"POST \/api\/users\/registration HTTP\/\d+\.\d+" [\d]+ [\S]+ [\S]+ [\S]+ [\S]+ "[\S]+" "[\S]+" "\S+" ".*?" "-" ".*?" ".*?" "\S+" "-".*
+ignoreregex =

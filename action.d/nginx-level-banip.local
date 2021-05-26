@@ -1,0 +1,27 @@
+
+[Definition]
+
+# path to configuration of nginx (used to target nginx-instance in multi-instance system,
+# and as path for the blacklisted map):
+file_path = /etc/nginx/
+
+# map-file for nginx, can be redefined using `action = nginx-block-map[blck_lst_file="/path/file.map"]`:
+blck_lst_file = %(file_path)s/blacklisted-sessions.map
+
+reload_nginx_config = /etc/init.d/nginx reload
+# Action definition:
+
+#actionstart_on_demand = false
+actionstart = touch '%(blck_lst_file)s'
+
+actionflush = truncate -s 0 '%(blck_lst_file)s'; %(reload_nginx_config)s
+
+actionstop = %(actionflush)s
+
+actioncheck = 
+
+_echo_blck_row = printf '%%s 1;\n' <ip>
+
+actionban = %(_echo_blck_row)s >> '%(blck_lst_file)s'; %(reload_nginx_config)s
+
+actionunban = sed -i "/\b\(<ip>\)\b/d" %(blck_lst_file)s; %(reload_nginx_config)s

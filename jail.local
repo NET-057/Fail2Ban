@@ -1,0 +1,23 @@
+[nginx-level-banip]
+
+enabled  = true
+filter   = auth-reverse-pxy
+port     = http,https
+action   = nginx-level-banip[name=serverAuthApis, port="http,https"]
+           sendmail-whois[name=serverAuthApis, dest=email@gmail.com]
+logpath  = /home/ec2-user/fail2ban/access.log
+maxretry = 20
+findtime = 60
+bantime = 1800
+
+[reverse-proxy]
+
+enabled  = false
+filter   = auth-reverse-pxy
+port     = http,https
+action   = block-ip-on-cdn[name=reverseProxy]
+           sendmail-whois[name=reverseProxy, dest=email@gmail.com]
+logpath  = /home/ec2-user/fail2ban/access.log
+maxretry = 20
+findtime = 60
+bantime = 1800
